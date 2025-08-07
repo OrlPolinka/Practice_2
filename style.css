@@ -1,0 +1,58 @@
+.AddInput{
+    display: flex;
+    justify-content: center;
+    
+    margin-top: 35px;
+}
+
+.textInput{
+    height: 40px;
+    width: 45%;
+    display: block;
+    margin: 10px;
+    margin-bottom: 15px;
+    border: solid black 2px;
+    
+}
+
+button{
+    height: 35px;
+    display: inline-block;
+    margin: 10px;
+    border: none;
+    background-color: rgb(230, 245, 243);
+    cursor: pointer;
+}
+
+.addButton{
+    background-color: lightblue;
+    height: 45px;
+    font-size: 35px;
+    margin-top: 5px;
+}
+
+*{
+    font-size: 18px;
+}
+
+.checkbox{
+   transform: scale(2);
+    margin: 10px;
+    cursor: pointer;
+    
+}
+
+
+.todoItem{
+    
+    margin-left: 24%;
+    margin-top: 10px;
+    padding: 5px;
+    max-width: 50vw;
+    border: black solid 2px;
+    background-color: rgb(230, 245, 243);
+}
+
+body{
+    background-color: lightblue;
+}
