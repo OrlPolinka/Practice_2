@@ -7,14 +7,41 @@
     <link href="style.css" rel="stylesheet" media="all">
 </head>
 <body>
-    <div class="AddInput">
-        <input type="text" id="item" class="textInput" placeholder="Введите задание">
-        <button onclick="AddItem();" id="addButton" class="addButton">✅</button>
+    
+    <div id="modal" class="modal">
+        <div id="modalContent" class="modalContent">
+            <span id="close" class="close" onclick="closeModal()">❌</span>
+            <div id="modalFormContainer" class="modalFormContainer">
+                <div class="containerDiv">
+                    <label class="labelForInput" for="select">Напишите задачу</label>
+                    <input placeholder="Купить продукты" id="item" class="input" type="text">
+                </div>
+                <div class="containerDiv">
+                    <label for="select" class="labelForSelect">Установите приоритет</label>
+                    <select name="select" id="select" class="select">
+                        <option value="Высокий">Высокий</option>
+                        <option value="Средний">Средний</option>
+                        <option value="Низкий">Низкий</option>
+                    </select>
+                </div>
+                <button id="AddButton" class="AddButton" onclick="AddItem()">Добавить</button>
+            </div>
+        </div>
     </div>
 
-    <div class="TodoItemContainer" id="TodoItemContainer">
-        
+    <h1>ToDoList</h1>
+    <h3>Для удобной организации ваших задач</h3>
+
+    <div class="AddInput">
+        <button id="openAddForm" onclick="openModal()" class="openFormButton">+ Добавить новую задачу</button>
     </div>
+
+    <div class="mainContainerList">
+        <div class="TodoItemContainer" id="TodoItemContainer">
+            
+        </div>
+    </div>
+
 
     <script src="TodoList.js"></script>
 </body>
