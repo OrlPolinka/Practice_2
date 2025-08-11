@@ -32,6 +32,12 @@
     <h1>ToDoList</h1>
     <h3>Для удобной организации ваших задач</h3>
 
+    <div class="filters">
+        <button id="buttonAll" class="buttonIsActive all" onclick="clickAll()">Все</button>
+        <button id="buttonActive" class="buttonIsActive" onclick="clickActive()">Активные</button>
+        <button id="buttonNoActive" class="buttonIsActive" onclick="clickNoActive()">Завершенные</button>
+    </div>
+
     <div class="AddInput">
         <button id="openAddForm" onclick="openModal()" class="openFormButton">+ Добавить новую задачу</button>
     </div>

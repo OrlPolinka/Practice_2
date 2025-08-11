@@ -1,14 +1,17 @@
-EditingElement = null;
+let EditingElement = null;
+let FilterFlag = "all";
 
 class Task{
     Id;
     Text;
     Status;
+    Flag;
 
-    constructor(text, status, id){
+    constructor(text, status, id, flag){
         this.Id = id;
         this.Status = status;
         this.Text = text;
+        this.Flag = flag;
     }
 }
 
@@ -45,7 +48,6 @@ function closeModal(){
 
 
 function AddItem(){
-    let container = document.getElementById("TodoItemContainer");
     let input = document.getElementById("item");
     let select = document.getElementById("select");
     let AddButton = document.getElementById("AddButton");
@@ -54,72 +56,10 @@ function AddItem(){
 
     if(AddButton.textContent == "Добавить"){
 
-        let newTask = new Task(input.value, select.value, Tasks.length + 1);
+        let newTask = new Task(input.value, select.value, Tasks.length + 1, false);
         Tasks.push(newTask);
 
-        let newItemDiv = document.createElement("div");
-        newItemDiv.className = "todoItem";
-        newItemDiv.setAttribute("dataId", newTask.Id);
-
-        let newElem = document.createElement("p");
-        newElem.className = "text";
-        newElem.textContent = newTask.Text;
-
-        let status = document.createElement("p");
-        status.className = "status";
-        status.textContent = newTask.Status;
-        if(status.textContent == "Высокий"){
-            status.style.backgroundColor = "rgba(238, 74, 74, 1)";
-        } else if(status.textContent == "Средний"){
-            status.style.backgroundColor = "rgba(247, 241, 74, 1)";
-        } else {
-            status.style.backgroundColor = "rgb(93, 192, 93)";
-        }  
-        
-
-        let RedactButton = document.createElement("button");
-        RedactButton.textContent = "✏️";
-        RedactButton.className = "EditButton";
-        RedactButton.onclick = function() {
-            openModal(newTask);
-        };
-
-        let DeleteButton = document.createElement("button");
-        DeleteButton.textContent = "❌";
-        DeleteButton.className = "DeleteButton";
-
-        DeleteButton.onclick = function() {
-            DeleteItem(newItemDiv, newTask);
-        };
-
-        let CheckBox = document.createElement("input");
-        CheckBox.type = "checkbox";
-        CheckBox.className = "checkbox"
-        CheckBox.onchange = function() {
-            if(CheckBox.checked){
-                newElem.style.textDecoration = "line-through";
-            }
-            else{
-                newElem.style.textDecoration = "none";
-            }
-        }
-
-        let CheckContainer = document.createElement("div");
-        CheckContainer.appendChild(CheckBox);
-        CheckContainer.appendChild(newElem);
-        CheckContainer.className = "ContainerForFlex";
-
-        let Buttons = document.createElement("div");
-        Buttons.appendChild(RedactButton);
-        Buttons.appendChild(DeleteButton);
-        Buttons.className = "ContainerForFlex";
-
-
-        newItemDiv.appendChild(CheckContainer);
-        newItemDiv.appendChild(status);
-        newItemDiv.appendChild(Buttons);
-
-        container.appendChild(newItemDiv);
+        renderDivs(newTask);
     }
     else{
         EditingElement.Text = input.value;
@@ -142,6 +82,7 @@ function AddItem(){
     }
 
     closeModal();
+    renderFilter(FilterFlag);
 }
 
 
@@ -155,3 +96,134 @@ document.getElementById("modal").addEventListener("keydown", function(event){
         AddItem();
     }
 });
+
+
+function clickNoActive(){
+    let buttonAll = document.getElementById("buttonAll");
+    let buttonActive = document.getElementById("buttonActive");
+    let buttonNoActive = document.getElementById("buttonNoActive");
+
+    buttonActive.style.backgroundColor = "rgba(255, 255, 255, 1)";
+    buttonNoActive.style.backgroundColor = " rgb(133, 116, 227)";
+    buttonAll.style.backgroundColor = "rgba(255, 255, 255, 1)";
+
+    FilterFlag = "noactive"
+    renderFilter(FilterFlag);
+
+}
+
+function clickActive(){
+    let buttonAll = document.getElementById("buttonAll");
+    let buttonActive = document.getElementById("buttonActive");
+    let buttonNoActive = document.getElementById("buttonNoActive");
+
+    buttonNoActive.style.backgroundColor = "rgba(255, 255, 255, 1)";
+    buttonActive.style.backgroundColor = " rgb(133, 116, 227)";
+    buttonAll.style.backgroundColor = "rgba(255, 255, 255, 1)";
+
+    FilterFlag = "active"
+    renderFilter(FilterFlag);
+}
+
+function clickAll(){
+    let buttonAll = document.getElementById("buttonAll");
+    let buttonActive = document.getElementById("buttonActive");
+    let buttonNoActive = document.getElementById("buttonNoActive");
+
+    buttonActive.style.backgroundColor = "rgba(255, 255, 255, 1)";
+    buttonAll.style.backgroundColor = " rgb(133, 116, 227)";
+    buttonNoActive.style.backgroundColor = "rgba(255, 255, 255, 1)";
+
+    
+    FilterFlag = "all"
+    renderFilter(FilterFlag);
+}
+
+
+function renderFilter(filter){
+    let FilteredContainer = [];
+    
+    let container = document.getElementById("TodoItemContainer");
+    container.innerHTML = "";
+
+    if(FilterFlag === "all"){
+        FilteredContainer = Tasks;
+    }
+    else if(FilterFlag === "active"){
+        FilteredContainer = Tasks.filter(task => task.Flag == false);
+    }
+    else if (FilterFlag === "noactive"){
+        FilteredContainer = Tasks.filter(task => task.Flag == true);
+
+    }
+
+    FilteredContainer.forEach(task => renderDivs(task));
+}
+
+function renderDivs(task){
+    let container = document.getElementById("TodoItemContainer");
+
+    let newItemDiv = document.createElement("div");
+        newItemDiv.className = "todoItem";
+        newItemDiv.setAttribute("dataId", task.Id);
+
+        let newElem = document.createElement("p");
+        newElem.className = "text";
+        newElem.textContent = task.Text;
+
+        let status = document.createElement("p");
+        status.className = "status";
+        status.textContent = task.Status;
+        if(status.textContent == "Высокий"){
+            status.style.backgroundColor = "rgba(238, 74, 74, 1)";
+        } else if(status.textContent == "Средний"){
+            status.style.backgroundColor = "rgba(247, 241, 74, 1)";
+        } else {
+            status.style.backgroundColor = "rgb(93, 192, 93)";
+        }  
+        
+
+        let RedactButton = document.createElement("button");
+        RedactButton.textContent = "✏️";
+        RedactButton.className = "EditButton";
+        RedactButton.onclick = function() {
+            openModal(task);
+        };
+
+        let DeleteButton = document.createElement("button");
+        DeleteButton.textContent = "❌";
+        DeleteButton.className = "DeleteButton";
+
+        DeleteButton.onclick = function() {
+            DeleteItem(newItemDiv, task);
+        };
+
+        let CheckBox = document.createElement("input");
+        CheckBox.type = "checkbox";
+        CheckBox.className = "checkbox"
+        CheckBox.onchange = function() {
+            task.Flag = CheckBox.checked;
+            newElem.style.textDecoration = task.Flag ? "line-through" : "none"
+        }
+        CheckBox.checked = task.Flag;
+        newElem.style.textDecoration = task.Flag ? "line-through" : "none"
+
+
+
+        let CheckContainer = document.createElement("div");
+        CheckContainer.appendChild(CheckBox);
+        CheckContainer.appendChild(newElem);
+        CheckContainer.className = "ContainerForFlex";
+
+        let Buttons = document.createElement("div");
+        Buttons.appendChild(RedactButton);
+        Buttons.appendChild(DeleteButton);
+        Buttons.className = "ContainerForFlex";
+
+
+        newItemDiv.appendChild(CheckContainer);
+        newItemDiv.appendChild(status);
+        newItemDiv.appendChild(Buttons);
+
+        container.appendChild(newItemDiv);
+}

@@ -65,10 +65,6 @@ button{
     min-width: 70px ;
 }
 
-
-
-
-
 .mainContainerList{
     display: flex;
     justify-content: center;
@@ -158,4 +154,21 @@ h3{
     font-size: 20px;
     border: black 2px dashed;
     border-radius: 5px;
+}
+
+
+.buttonIsActive{
+    padding: 10px 15px;
+    height: auto;
+    border: none ;
+    border-radius: 5px;
+}
+
+.all{
+    background-color: rgb(133, 116, 227);
+}
+
+.filters{
+    display: flex;
+    justify-content: center;
 }
