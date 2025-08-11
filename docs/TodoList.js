@@ -204,6 +204,8 @@ function renderDivs(task){
         CheckBox.onchange = function() {
             task.Flag = CheckBox.checked;
             newElem.style.textDecoration = task.Flag ? "line-through" : "none"
+            renderFilter(FilterFlag);
+
         }
         CheckBox.checked = task.Flag;
         newElem.style.textDecoration = task.Flag ? "line-through" : "none"
